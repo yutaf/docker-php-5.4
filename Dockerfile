@@ -1,5 +1,4 @@
 FROM debian:jessie
-#FROM ubuntu:14.04
 MAINTAINER yutaf <yutafuji2008@gmail.com>
 
 RUN \
