@@ -164,7 +164,7 @@ RUN \
 # set TERM
   echo export TERM=xterm-256color >> /root/.bashrc && \
 # set timezone
-  ln -sf /usr/share/zoneinfo/Japan /etc/localtime && \
+#  ln -sf /usr/share/zoneinfo/Japan /etc/localtime && \
 # Delete logs except dot files
   echo '00 5 1,15 * * find /srv/www/logs -regex ".*/\.[^/]*$" -prune -o -type f -mtime +15 -print -exec rm -f {} \;' > /root/crontab && \
   crontab /root/crontab
