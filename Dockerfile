@@ -26,6 +26,15 @@ RUN \
     g++ \
 # xdebug
     autoconf \
+# ffmpeg
+    automake \
+    build-essential \
+    libtool \
+    libx264-dev \
+    libmp3lame-dev \
+    libopus-dev \
+    libvorbis-dev \
+    yasm \
 # supervisor
     supervisor && \
   rm -r /var/lib/apt/lists/*
@@ -121,6 +130,44 @@ RUN \
 # php.ini
 COPY templates/php.ini /srv/php/
 RUN echo 'zend_extension = "/opt/php-5.4.35/lib/php/extensions/no-debug-non-zts-20100525/xdebug.so"' >> /srv/php/php.ini
+
+#
+# ffmpeg
+#
+
+# fdk-aac
+RUN \
+  git clone --depth 1 git://git.code.sf.net/p/opencore-amr/fdk-aac && \
+  cd fdk-aac && \
+  autoreconf -fiv && \
+  ./configure --prefix="/usr/local/ffmpeg_build" --disable-shared && \
+  make && \
+  make install && \
+  cd ../ && \
+  rm -rf fdk-aac && \
+# ffmpeg
+  git clone --depth 1 git://source.ffmpeg.org/ffmpeg && \
+  cd ffmpeg && \
+  PKG_CONFIG_PATH="/usr/local/ffmpeg_build/lib/pkgconfig/" ./configure \
+    --prefix="/usr/local/ffmpeg_build" \
+    --pkg-config-flags="--static" \
+    --extra-cflags="-I/usr/local/ffmpeg_build/include" \
+    --extra-ldflags="-L/usr/local/ffmpeg_build/lib" \
+    --bindir="/usr/local/bin" \
+    --extra-libs=-ldl \
+    --enable-gpl \
+    --enable-nonfree \
+    --enable-libfdk_aac \
+    --enable-libmp3lame \
+    --enable-libopus \
+    --enable-libvorbis \
+    --enable-libx264 && \
+  make && \
+  make install && \
+  cd .. && \
+  rm -rf ffmpeg && \
+# Delete build sources
+  rm -rf /usr/local/ffmpeg_build
 
 #
 # Edit config files
