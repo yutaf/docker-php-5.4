@@ -105,7 +105,7 @@ RUN \
   make install && \
   rm -r /usr/local/src/php
 
-# Set PATH to compile extensions
+# Add php to PATHs to compile extensions like xdebug
 ENV PATH /opt/php-5.4.35/bin:$PATH
 
 # xdebug
