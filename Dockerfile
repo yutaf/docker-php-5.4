@@ -1,9 +1,9 @@
-FROM ubuntu:14.04
+FROM ubuntu:14.04.3
 MAINTAINER yutaf <yutafuji2008@gmail.com>
 
 RUN \
   apt-get update && \
-  apt-get install -y --no-install-recommends \
+  DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
 # binary
     curl \
     git \
