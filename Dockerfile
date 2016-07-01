@@ -7,6 +7,7 @@ RUN \
 # binary
     curl \
     git \
+    mysql-client \
 # Apache, php \
     make \
     gcc \
