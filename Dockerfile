@@ -106,6 +106,10 @@ RUN \
   make install && \
   rm -r /usr/local/src/php
 
+# workaround for curl certification error
+COPY templates/ca-bundle-curl.crt /root/ca-bundle-curl.crt
+#RUN curl -k -L -o $HOME/ca-bundle-curl.crt https://curl.haxx.se/ca/cacert.pem
+
 # Add php to PATHs to compile extensions like xdebug
 ENV PATH /opt/php-5.4.35/bin:$PATH
 
