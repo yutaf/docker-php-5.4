@@ -117,7 +117,7 @@ ENV PATH /opt/php-5.4.35/bin:$PATH
 RUN \
   mkdir -p /usr/local/src/xdebug && \
   cd /usr/local/src/xdebug && \
-  curl -L -O http://xdebug.org/files/xdebug-2.3.3.tgz && \
+  curl --cacert $HOME/ca-bundle-curl.crt -L -O http://xdebug.org/files/xdebug-2.3.3.tgz && \
   tar -xzf xdebug-2.3.3.tgz && \
   cd xdebug-2.3.3 && \
   phpize && \
@@ -125,11 +125,11 @@ RUN \
   make && \
   make install && \
   cd && \
-  rm -r /usr/local/src/xdebug && \
+  rm -r /usr/local/src/xdebug
+
 # redis
-  pecl install redis && \
-# workaround for composer curl error
-  curl -o $HOME/ca-bundle-curl.crt http://curl.haxx.se/ca/cacert.pem
+RUN \
+  pecl install redis-2.2.8
 
 
 # php.ini
